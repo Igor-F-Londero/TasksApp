@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TaskApp</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Senha</string>
+    <string name="btn_login">Entrar</string>
+    <string name="error_invalid_credentials">E-mail ou senha incorretos.</string>
+    <string name="title_tasks">Minhas tarefas</string>
+    <string name="btn_add_task">Nova tarefa</string>
+</resources>
