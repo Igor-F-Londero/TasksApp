@@ -27,7 +27,7 @@ class NewTaskActivity : AppCompatActivity() {
 
         // Verifica se chegou dados para edição
         val extras = intent.extras
-        if (extras != null) {
+        if (extras != null && extras.getInt("task_id",-1)!= -1) {
             editingTaskId        = extras.getInt("task_id", -1)
             etTitle.setText(extras.getString("task_title", ""))
             etDesc.setText(extras.getString("task_desc", ""))

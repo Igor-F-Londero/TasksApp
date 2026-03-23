@@ -66,7 +66,9 @@ class TaskDetailActivity : AppCompatActivity() {
             resultIntent.putExtra("task_desc",    taskDesc)
             resultIntent.putExtra("task_priority",taskPriority)
             resultIntent.putExtra("task_is_done", taskIsDone)
+            resultIntent.putExtra("deleted",       true)
             setResult(Activity.RESULT_OK, resultIntent)
+            finish()
         }
 
         findViewById<Button>(R.id.btnEdit).setOnClickListener {

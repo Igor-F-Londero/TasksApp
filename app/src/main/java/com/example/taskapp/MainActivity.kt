@@ -1,44 +1,48 @@
 package com.example.taskapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.commit
+import com.example.taskapp.model.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var adapter: TaskAdapter
-    private val taskList = mutableListOf<Task>()
+    private lateinit var taskListFragment: TaskListFragment
+
+    private val newTaskLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data     = result.data ?: return@registerForActivityResult
+            val title    = data.getStringExtra("task_title") ?: return@registerForActivityResult
+            val desc     = data.getStringExtra("task_desc") ?: ""
+            val priority = data.getStringExtra("task_priority") ?: "Média"
+            taskListFragment.addTask(Task(title = title, description = desc, priority = priority))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val fabAdd       = findViewById<FloatingActionButton>(R.id.fabAdd)
-
-        // Configura o Adapter com callback de clique
-        adapter = TaskAdapter(taskList) { task ->
-            // Clique em um item → abre tela de detalhes (próximo passo)
-        //    val intent = Intent(this, TaskDetailActivity::class.java)
-          //  intent.putExtra("task_title", task.title)
-          //  intent.putExtra("task_desc", task.description)
-            startActivity(intent)
+        // Só cria o Fragment se não existir ainda
+        if (savedInstanceState == null) {
+            taskListFragment = TaskListFragment()
+            supportFragmentManager.commit {
+                replace(R.id.fragmentContainer, taskListFragment)
+            }
+        } else {
+            // Recupera o Fragment já existente
+            taskListFragment = supportFragmentManager
+                .findFragmentById(R.id.fragmentContainer) as TaskListFragment
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
-        // Dados de exemplo para testar
-        adapter.addTask(Task(1, "Estudar Kotlin", "Revisar coroutines e flows"))
-        adapter.addTask(Task(2, "Fazer o trabalho", "Implementar Room no app"))
-
-        // Botão flutuante → abre tela de nova tarefa (próximo passo)
-        fabAdd.setOnClickListener {
-         //   val intent = Intent(this, NewTaskActivity::class.java)
-            startActivity(intent)
+        findViewById<FloatingActionButton>(R.id.fabAdd).setOnClickListener {
+            newTaskLauncher.launch(Intent(this, NewTaskActivity::class.java))
         }
     }
 }
