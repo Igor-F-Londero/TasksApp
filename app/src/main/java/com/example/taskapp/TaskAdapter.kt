@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskapp.model.Task
 
 class TaskAdapter(
     private val tasks: MutableList<Task>,
@@ -65,5 +66,28 @@ class TaskAdapter(
     fun addTask(task: Task) {
         tasks.add(task)
         notifyItemInserted(tasks.size - 1)
+    }
+    fun updateTask(id: Int, title: String, desc: String, priority: String, isDone: Boolean) {
+        val index = tasks.indexOfFirst { it.id == id }
+        if (index != -1) {
+            tasks[index] = tasks[index].copy(
+                title       = title,
+                description = desc,
+                priority    = priority
+            )
+            notifyItemChanged(index)
+        }
+    }
+    fun removeTask(id: Int) {
+        val index = tasks.indexOfFirst { it.id == id }
+        if (index != -1) {
+            tasks.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
+    fun updateList(newTasks: MutableList<Task>) {
+        tasks.clear()
+        tasks.addAll(newTasks)
+        notifyDataSetChanged()
     }
 }

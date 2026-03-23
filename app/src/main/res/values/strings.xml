@@ -6,4 +6,23 @@
     <string name="error_invalid_credentials">E-mail ou senha incorretos.</string>
     <string name="title_tasks">Minhas tarefas</string>
     <string name="btn_add_task">Nova tarefa</string>
+    <string name="hint_task_title">Título da tarefa</string>
+    <string name="hint_task_desc">Descrição (opcional)</string>
+    <string name="label_priority">Prioridade</string>
+    <string name="priority_low">Baixa</string>
+    <string name="priority_medium">Média</string>
+    <string name="priority_high">Alta</string>
+    <string name="error_empty_title">O título é obrigatório.</string>
+    <string name="btn_save_task">Salvar tarefa</string>
+    <string name="btn_update_task">Atualizar tarefa</string>
+    <string name="title_edit_task">Editar tarefa</string>
+    <string name="label_status">Concluída?</string>
+    <string name="label_done">Sim</string>
+    <string name="label_no_desc">Sem descrição.</string>
+    <string name="btn_edit">Editar tarefa</string>
+    <string name="btn_delete">Excluir tarefa</string>
+    <string name="dialog_delete_title">Excluir tarefa</string>
+    <string name="dialog_delete_message">Tem certeza que deseja excluir esta tarefa?</string>
+    <string name="btn_confirm_delete">Excluir</string>
+    <string name="btn_cancel">Cancelar</string>
 </resources>
