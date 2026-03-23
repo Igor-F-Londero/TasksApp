@@ -1,8 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.TaskApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Background and Window Colors -->
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
+        <!-- Primary Colors (Purple Main) -->
+        <item name="colorPrimary">@color/purple_main</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/purple_dark</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+
+        <!-- Secondary Colors (Cards) -->
+        <item name="colorSecondary">@color/card_dark</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+
+        <!-- Surface Colors (Inputs/Backgrounds) -->
+        <item name="colorSurface">@color/card_dark</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/input_background</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+
+        <!-- Accent/Action Colors -->
+        <item name="colorAccent">@color/purple_light</item>
     </style>
 
     <style name="Theme.TaskApp" parent="Base.Theme.TaskApp" />

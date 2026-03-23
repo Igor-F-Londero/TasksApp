@@ -6,19 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@color/login_background">
+    android:background="@color/background_dark">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_task_title"
+        android:textColorHint="@color/input_hint"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/purple_main"
+        app:hintTextColor="@color/purple_light"
         android:layout_marginBottom="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:background="@color/input_background"
             android:inputType="textCapSentences"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -27,25 +32,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_task_desc"
+        android:textColorHint="@color/input_hint"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/purple_main"
+        app:hintTextColor="@color/purple_light"
         android:layout_marginBottom="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTaskDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:background="@color/input_background"
             android:inputType="textMultiLine"
             android:minLines="3"
             android:gravity="top"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Seletor de prioridade -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_priority"
-        android:textColor="@color/login_title"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         android:layout_marginBottom="8dp"/>
 
@@ -61,6 +70,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/purple_main"
             android:text="@string/priority_low"/>
 
         <RadioButton
@@ -68,6 +79,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/purple_main"
             android:text="@string/priority_medium"
             android:checked="true"/>
 
@@ -76,6 +89,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/purple_main"
             android:text="@string/priority_high"/>
 
     </RadioGroup>
@@ -85,6 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/error_empty_title"
+        android:textColor="#FF5252"
         android:visibility="gone"
         android:layout_marginBottom="8dp"/>
 
@@ -93,6 +109,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_save_task"
+        android:backgroundTint="@color/button_primary"
+        android:textColor="@color/button_text"
         style="@style/Widget.MaterialComponents.Button"/>
 
 </LinearLayout>

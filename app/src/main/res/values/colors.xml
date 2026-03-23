@@ -1,13 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#313030</color>
-    <color name="purple_700">#FF6200EE</color>
-    <color name="red_500">#FFF44336</color>
-    <color name="login_background">#FFFFFFFF</color>
-    <color name="login_title">#FF6200EE</color>
-    <color name="login_field_border">#FF6200EE</color>
-    <color name="login_button">#FF6200EE</color>
-    <color name="login_button_text">#FFFFFFFF</color>
+
+    <!-- Background -->
+    <color name="background_dark">#0F0F1A</color>
+    <color name="card_dark">#1A1A2E</color>
+
+    <!-- Roxo principal -->
+    <color name="purple_main">#6C3EF4</color>
+    <color name="purple_light">#9C6BFF</color>
+    <color name="purple_dark">#4A2BBE</color>
+
+    <!-- Texto -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+
+    <!-- Inputs -->
+    <color name="input_background">#1A1A2E</color>
+    <color name="input_hint">#777777</color>
+
+    <!-- Botões -->
+    <color name="button_primary">#6C3EF4</color>
+    <color name="button_text">#FFFFFF</color>
 </resources>

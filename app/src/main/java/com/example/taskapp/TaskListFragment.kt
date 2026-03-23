@@ -24,7 +24,6 @@ class TaskListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutEmpty: LinearLayout
 
-    // Launcher para abrir detalhes — edição e exclusão
     private val detailLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -80,20 +79,26 @@ class TaskListFragment : Fragment() {
             tasks = mutableListOf(),
             onItemClick = { task ->
                 val intent = Intent(requireContext(), TaskDetailActivity::class.java).apply {
-                    putExtra("task_id",       task.id)
-                    putExtra("task_title",    task.title)
-                    putExtra("task_desc",     task.description)
+                    putExtra("task_id", task.id)
+                    putExtra("task_title", task.title)
+                    putExtra("task_desc", task.description)
                     putExtra("task_priority", task.priority)
-                    putExtra("task_is_done",  task.isDone)
+                    putExtra("task_is_done", task.isDone)
                 }
                 detailLauncher.launch(intent)
+            },
+            onTaskStatusChanged = { task ->
+                lifecycleScope.launch {
+                    repository.update(task)
+                }
             }
         )
+
+
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // Observa o banco e atualiza a lista + empty state
         lifecycleScope.launch {
             repository.allTasks.collect { tasks ->
                 adapter.updateList(tasks.toMutableList())
@@ -108,7 +113,6 @@ class TaskListFragment : Fragment() {
         }
     }
 
-    // Chamado pela MainActivity quando o FAB é clicado
     fun addTask(task: Task) {
         lifecycleScope.launch {
             repository.insert(task)

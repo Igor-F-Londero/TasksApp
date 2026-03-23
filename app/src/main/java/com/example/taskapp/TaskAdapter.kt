@@ -10,103 +10,68 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.model.Task
 
 class TaskAdapter(
-    private val tasks: MutableList<Task>,
-    private val onItemClick: (Task) -> Unit
+    private var tasks: MutableList<Task>,
+    private val onItemClick: (Task) -> Unit,
+    private val onTaskStatusChanged: (Task) -> Unit // Adicionado para salvar no banco quando marcar como feito
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    // ViewHolder: segura as referências das views de cada item
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView       = itemView.findViewById(R.id.tvTitle)
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
         val cbDone: CheckBox        = itemView.findViewById(R.id.cbDone)
     }
 
-    // Cria o ViewHolder inflando o layout item_task.xml
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_task, parent, false)
         return TaskViewHolder(view)
     }
 
-    // Preenche cada item com os dados da tarefa
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
 
         holder.tvTitle.text       = task.title
         holder.tvDescription.text = task.description
-        // Marca/desmarca o checkbox de acordo com o status da tarefa
-        holder.cbDone.setOnCheckedChangeListener (null)
-        holder.cbDone.isChecked   = task.isDone
-
-        // Risco no texto quando concluída
-        if (task.isDone) {
-            holder.tvTitle.paintFlags =
-                holder.tvTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        } else {
-            holder.tvTitle.paintFlags =
-                holder.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-        }
 
 
-        // Clique no checkbox → marca/desmarca
+        holder.cbDone.setOnCheckedChangeListener(null)
+        holder.cbDone.isChecked = task.isDone
+
+        updateTitleStyle(holder.tvTitle, task.isDone)
+
         holder.cbDone.setOnCheckedChangeListener { _, isChecked ->
             task.isDone = isChecked
-            notifyItemChanged(position)
+            updateTitleStyle(holder.tvTitle, isChecked)
+            onTaskStatusChanged(task)
         }
 
-        // Clique no item → abre detalhes
         holder.itemView.setOnClickListener {
             onItemClick(task)
         }
     }
 
+    private fun updateTitleStyle(textView: TextView, isDone: Boolean) {
+        if (isDone) {
+            textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            textView.alpha = 0.5f
+        } else {
+            textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            textView.alpha = 1.0f
+        }
+    }
+
     override fun getItemCount(): Int = tasks.size
 
-    fun updateTask(id: Int, title: String, desc: String, priority: String, isDone: Boolean) {
-        val index = tasks.indexOfFirst { it.id == id }
-        if (index != -1) {
-            tasks[index] = tasks[index].copy(
-                title       = title,
-                description = desc,
-                priority    = priority,
-                isDone      = isDone,
-            )
-            notifyItemChanged(index)
-        }
+    fun updateList(newTasks: List<Task>) {
+        this.tasks = newTasks.toMutableList()
+        notifyDataSetChanged()
     }
+
     fun removeTask(id: Int) {
         val index = tasks.indexOfFirst { it.id == id }
         if (index != -1) {
             tasks.removeAt(index)
             notifyItemRemoved(index)
         }
-    }
-    fun updateList(newTasks: MutableList<Task>) {
-        tasks.clear()
-        tasks.addAll(newTasks)
-        notifyDataSetChanged()
-    }
-    fun updateTask(id: Int, title: String, desc: String, priority: String, isDone: Boolean) {
-        val index = tasks.indexOfFirst { it.id == id }
-        if (index != -1) {
-            tasks[index] = tasks[index].copy(
-                title       = title,
-                description = desc,
-                priority    = priority
-            )
-            notifyItemChanged(index)
-        }
-    }
-    fun removeTask(id: Int) {
-        val index = tasks.indexOfFirst { it.id == id }
-        if (index != -1) {
-            tasks.removeAt(index)
-            notifyItemRemoved(index)
-        }
-    }
-    fun updateList(newTasks: MutableList<Task>) {
-        tasks.clear()
-        tasks.addAll(newTasks)
-        notifyDataSetChanged()
     }
 }
