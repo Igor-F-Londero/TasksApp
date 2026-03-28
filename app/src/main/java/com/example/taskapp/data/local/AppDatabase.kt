@@ -1,15 +1,13 @@
-package com.example.taskapp.data
+package com.example.taskapp.data.local
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room // IMPORTANTE: Faltava este import
+import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.taskapp.model.Task
+import com.example.taskapp.domain.model.Task
 
-// Classe abstrata para o Room
 @Database(entities = [Task::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun taskDao(): TaskDao
 
     companion object {
@@ -21,7 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "taskapp_database"
+                    "task_database"
                 ).build()
                 INSTANCE = instance
                 instance

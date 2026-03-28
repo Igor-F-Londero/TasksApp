@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import com.example.taskapp.model.Task
+import com.example.taskapp.domain.model.Task
+import com.example.taskapp.ui.task.NewTaskActivity
+import com.example.taskapp.ui.task.TaskListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {

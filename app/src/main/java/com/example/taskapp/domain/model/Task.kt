@@ -1,4 +1,4 @@
-package com.example.taskapp.model
+package com.example.taskapp.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

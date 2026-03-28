@@ -1,4 +1,4 @@
-package com.example.taskapp
+package com.example.taskapp.ui.task
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -7,18 +7,19 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskapp.model.Task
+import com.example.taskapp.R
+import com.example.taskapp.domain.model.Task
 
 class TaskAdapter(
     private var tasks: MutableList<Task>,
     private val onItemClick: (Task) -> Unit,
-    private val onTaskStatusChanged: (Task) -> Unit // Adicionado para salvar no banco quando marcar como feito
+    private val onTaskStatusChanged: (Task) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle: TextView       = itemView.findViewById(R.id.tvTitle)
+        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
-        val cbDone: CheckBox        = itemView.findViewById(R.id.cbDone)
+        val cbDone: CheckBox = itemView.findViewById(R.id.cbDone)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -32,7 +33,6 @@ class TaskAdapter(
 
         holder.tvTitle.text       = task.title
         holder.tvDescription.text = task.description
-
 
         holder.cbDone.setOnCheckedChangeListener(null)
         holder.cbDone.isChecked = task.isDone

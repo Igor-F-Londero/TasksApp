@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".NewTaskActivity" />
-        <activity android:name=".TaskDetailActivity" />
+        <activity android:name=".ui.task.NewTaskActivity" />
+        <activity android:name=".ui.task.TaskDetailActivity" />
     </application>
 
 </manifest>
