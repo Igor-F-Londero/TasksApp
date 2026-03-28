@@ -1,6 +1,5 @@
-package com.example.taskapp
+package com.example.taskapp.ui.task
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,6 +7,7 @@ import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.taskapp.R
 import com.google.android.material.textfield.TextInputEditText
 
 class NewTaskActivity : AppCompatActivity() {
@@ -69,7 +69,7 @@ class NewTaskActivity : AppCompatActivity() {
             resultIntent.putExtra("task_desc",     desc)
             resultIntent.putExtra("task_priority", priority)
 
-            setResult(Activity.RESULT_OK, resultIntent)
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
     }
