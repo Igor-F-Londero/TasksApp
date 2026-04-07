@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 
         return when (hour) {
-            in 5..11 -> ", Bom dia!"
-            in 12..17 -> ", Boa tarde!"
-            in 18..23 -> ", Boa noite!"
-            else -> ", Boa madrugada!" // Entre 00h e 04h
+            in 5..11 -> " Bom dia!"
+            in 12..17 -> " Boa tarde!"
+            in 18..23 -> " Boa noite!"
+            else -> " Boa madrugada!" // Entre 00h e 04h
         }
     }
 }
