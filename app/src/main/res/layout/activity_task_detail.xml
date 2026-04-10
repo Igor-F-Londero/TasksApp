@@ -12,84 +12,99 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Badge de prioridade -->
         <TextView
             android:id="@+id/tvPriorityBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
             android:background="@drawable/bg_badge"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"/>
 
-        <!-- Título -->
-        <TextView
-            android:id="@+id/tvDetailTitle"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="12dp"/>
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            android:background="@drawable/glass_card_background"
+            android:layout_marginBottom="24dp">
 
-        <!-- Descrição -->
-        <TextView
-            android:id="@+id/tvDetailDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:lineSpacingMultiplier="1.5"
-            android:layout_marginBottom="32dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-        <!-- Status -->
+                <TextView
+                    android:id="@+id/tvDetailTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:letterSpacing="-0.02"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:id="@+id/tvDetailDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_secondary"
+                    android:lineSpacingExtra="6dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="32dp">
+            android:padding="16dp"
+            android:background="@drawable/bg_input_glass"
+            android:layout_marginBottom="40dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/label_status"
-                android:textSize="14sp"
+                android:text="Marcar como concluída"
+                android:textSize="15sp"
                 android:textColor="@color/text_primary"/>
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/cbDetailDone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/purple_main"
-                android:textColor="@color/text_primary"
-                android:text="@string/label_done"/>
-
+                app:buttonTint="@color/purple_light" />
         </LinearLayout>
 
-        <!-- Botão editar -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_edit"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/button_primary"
-            android:textColor="@color/button_text"
-            style="@style/Widget.MaterialComponents.Button"/>
+            android:layout_height="60dp"
+            android:text="EDITAR TAREFA"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/purple_main"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:iconGravity="textStart" />
 
-        <!-- Botão excluir -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_delete"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="#FF5252"
-            android:textColor="#FF5252"/>
+            android:layout_height="60dp"
+            android:text="EXCLUIR TAREFA"
+            android:textColor="@color/priority_high"
+            app:rippleColor="#22FF5252" />
 
     </LinearLayout>
 </ScrollView>

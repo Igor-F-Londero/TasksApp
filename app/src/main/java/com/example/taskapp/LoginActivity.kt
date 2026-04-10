@@ -13,7 +13,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
 
-    private val VALID_EMAIL = "admin@taskapp.com"
+    private val VALID_EMAIL = "admin@gmail.com"
     private val VALID_PASSWORD = "123456"
     
     private val PREFS_NAME = "LoginPrefs"

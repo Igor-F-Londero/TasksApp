@@ -1,26 +1,24 @@
 <resources>
-    <!-- Base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <!-- Background -->
     <color name="background_dark">#0F0F1A</color>
+
     <color name="card_dark">#1A1A2E</color>
 
-    <!-- Roxo principal -->
     <color name="purple_main">#6C3EF4</color>
     <color name="purple_light">#9C6BFF</color>
     <color name="purple_dark">#4A2BBE</color>
 
-    <!-- Texto -->
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#AAAAAA</color>
-
-    <!-- Inputs -->
+    <color name="glass_white_stroke">#26FFFFFF</color>
     <color name="input_background">#1A1A2E</color>
     <color name="input_hint">#777777</color>
 
-    <!-- Botões -->
+    <color name="priority_low">#818197</color>
+    <color name="priority_medium">#6C3EF4</color>
+    <color name="priority_high">#FF5252</color>
+
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
     <color name="button_primary">#6C3EF4</color>
     <color name="button_text">#FFFFFF</color>
 </resources>

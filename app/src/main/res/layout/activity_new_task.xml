@@ -12,105 +12,91 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_task_title"
-        android:textColorHint="@color/input_hint"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/purple_main"
         app:hintTextColor="@color/purple_light"
-        android:layout_marginBottom="16dp">
+        app:boxBackgroundMode="none"
+        android:layout_marginBottom="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:textColor="@color/text_primary"
-            android:background="@color/input_background"
+            android:background="@drawable/bg_input_glass"
             android:inputType="textCapSentences"/>
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_task_desc"
-        android:textColorHint="@color/input_hint"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/purple_main"
         app:hintTextColor="@color/purple_light"
-        android:layout_marginBottom="16dp">
+        app:boxBackgroundMode="none"
+        android:layout_marginBottom="24dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTaskDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:textColor="@color/text_primary"
-            android:background="@color/input_background"
-            android:inputType="textMultiLine"
-            android:minLines="3"
+            android:background="@drawable/bg_input_glass"
+            android:minLines="4"
             android:gravity="top"/>
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_priority"
+        android:text="Prioridade"
         android:textColor="@color/text_secondary"
         android:textSize="14sp"
         android:layout_marginBottom="8dp"/>
 
-    <RadioGroup
-        android:id="@+id/rgPriority"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cgPriority"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:layout_marginBottom="32dp">
 
-        <RadioButton
-            android:id="@+id/rbLow"
-            android:layout_width="0dp"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipLow"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/text_primary"
-            android:buttonTint="@color/purple_main"
-            android:text="@string/priority_low"/>
+            android:text="Baixa"
+            app:chipBackgroundColor="@color/priority_low"
+            android:textColor="@color/white" />
 
-        <RadioButton
-            android:id="@+id/rbMedium"
-            android:layout_width="0dp"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipMedium"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/text_primary"
-            android:buttonTint="@color/purple_main"
-            android:text="@string/priority_medium"
-            android:checked="true"/>
+            android:text="Média"
+            android:checked="true"
+            app:chipBackgroundColor="@color/purple_main"
+            android:textColor="@color/white" />
 
-        <RadioButton
-            android:id="@+id/rbHigh"
-            android:layout_width="0dp"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipHigh"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/text_primary"
-            android:buttonTint="@color/purple_main"
-            android:text="@string/priority_high"/>
+            android:text="Alta"
+            app:chipBackgroundColor="@color/priority_high"
+            android:textColor="@color/white" />
+    </com.google.android.material.chip.ChipGroup>
 
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/tvError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/error_empty_title"
-        android:textColor="#FF5252"
-        android:visibility="gone"
-        android:layout_marginBottom="8dp"/>
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveTask"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_save_task"
-        android:backgroundTint="@color/button_primary"
-        android:textColor="@color/button_text"
-        style="@style/Widget.MaterialComponents.Button"/>
+        android:layout_height="60dp"
+        app:cornerRadius="16dp"
+        android:text="SALVAR TAREFA"
+        android:textStyle="bold"
+        android:backgroundTint="@color/purple_main"/>
 
 </LinearLayout>
