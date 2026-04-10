@@ -77,6 +77,3 @@ Responsável apenas pela renderização visual e captura de eventos, mantendo-se
 Shift + F10
 ```
 
----
-
-```
