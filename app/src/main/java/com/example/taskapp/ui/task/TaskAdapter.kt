@@ -1,6 +1,11 @@
 package com.example.taskapp.ui.task
 
+import android.animation.ValueAnimator
 import android.graphics.Paint
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StrikethroughSpan
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,17 +36,25 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
 
-        holder.tvTitle.text       = task.title
+        holder.tvTitle.text = task.title
         holder.tvDescription.text = task.description
 
+        // Remove o listener antes de setar o estado para evitar disparos infinitos no Scroll
         holder.cbDone.setOnCheckedChangeListener(null)
         holder.cbDone.isChecked = task.isDone
 
-        updateTitleStyle(holder.tvTitle, task.isDone)
+        // Aplica o estilo estático inicial (sem animação)
+        applyInitialStyle(holder, task.isDone)
 
-        holder.cbDone.setOnCheckedChangeListener { _, isChecked ->
+        holder.cbDone.setOnCheckedChangeListener { view, isChecked ->
             task.isDone = isChecked
-            updateTitleStyle(holder.tvTitle, isChecked)
+
+            // 1. Feedback tátil (vibração curta de confirmação)
+            view.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
+
+            // 2. Dispara a animação visual moderna
+            animateTaskStatus(holder, isChecked)
+
             onTaskStatusChanged(task)
         }
 
@@ -50,13 +63,45 @@ class TaskAdapter(
         }
     }
 
-    private fun updateTitleStyle(textView: TextView, isDone: Boolean) {
+    /** Aplica o estilo inicial sem animação. */
+    private fun applyInitialStyle(holder: TaskViewHolder, isDone: Boolean) {
+        val textView = holder.tvTitle
         if (isDone) {
-            textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            textView.alpha = 0.5f
+            val span = SpannableString(textView.text)
+            span.setSpan(StrikethroughSpan(), 0, textView.text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            textView.text = span
+            holder.itemView.alpha = 0.5f
         } else {
-            textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            textView.alpha = 1.0f
+            // Limpa spans e volta opacidade ao normal
+            textView.text = textView.text.toString()
+            holder.itemView.alpha = 1.0f
+        }
+    }
+
+    /**
+     * Executa a animação de risco (Strike-through) e opacidade.
+     */
+    private fun animateTaskStatus(holder: TaskViewHolder, isDone: Boolean) {
+        val textView = holder.tvTitle
+        val text = textView.text.toString()
+        val span = SpannableString(text)
+        val strikeSpan = StrikethroughSpan()
+
+        if (isDone) {
+            val animator = ValueAnimator.ofInt(0, text.length)
+            animator.duration = 350
+            animator.addUpdateListener { animation ->
+                val endValue = animation.animatedValue as Int
+                span.setSpan(strikeSpan, 0, endValue, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                textView.text = span
+            }
+
+            // Agora animamos o card inteiro para parecer que ficou mais opaco
+            holder.itemView.animate().alpha(0.5f).setDuration(350).start()
+            animator.start()
+        } else {
+            textView.text = text
+            holder.itemView.animate().alpha(1.0f).setDuration(350).start()
         }
     }
 

@@ -5,37 +5,39 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.taskapp.R
+import com.google.android.material.checkbox.MaterialCheckBox
 
 class TaskDetailActivity : AppCompatActivity() {
 
     private var taskId: Int = -1
     private var isDeleted: Boolean = false
 
-    // Launcher para receber os dados atualizados da NewTaskActivity
+
     private val editLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data ?: return@registerForActivityResult
-            
-            // Atualiza os campos da tela com os novos valores
+
             val updatedTitle = data.getStringExtra("task_title") ?: ""
             val updatedDesc = data.getStringExtra("task_desc") ?: ""
             val updatedPriority = data.getStringExtra("task_priority") ?: "Média"
-            
+
             findViewById<TextView>(R.id.tvDetailTitle).text = updatedTitle
             findViewById<TextView>(R.id.tvDetailDesc).text = updatedDesc
+
             val tvPriority = findViewById<TextView>(R.id.tvPriorityBadge)
             tvPriority.text = updatedPriority
             setupPriorityBadge(tvPriority, updatedPriority)
-            
-            // Avisa a MainActivity/Fragment que houve mudança no banco
+
             sendResultBack()
         }
     }
@@ -47,7 +49,7 @@ class TaskDetailActivity : AppCompatActivity() {
         val tvTitle: TextView = findViewById(R.id.tvDetailTitle)
         val tvDesc: TextView = findViewById(R.id.tvDetailDesc)
         val tvPriority: TextView = findViewById(R.id.tvPriorityBadge)
-        val cbDone: CheckBox = findViewById(R.id.cbDetailDone)
+        val cbDone: MaterialCheckBox = findViewById(R.id.cbDetailDone) // Atualizado para MaterialCheckBox
         val btnDelete: Button = findViewById(R.id.btnDelete)
         val btnEdit: Button = findViewById(R.id.btnEdit)
 
@@ -57,27 +59,23 @@ class TaskDetailActivity : AppCompatActivity() {
         val priority = intent.getStringExtra("task_priority") ?: "Média"
         val isDone = intent.getBooleanExtra("task_is_done", false)
 
-        // Preencher a UI
         tvTitle.text = title
         tvDesc.text = desc
         tvPriority.text = priority
         cbDone.isChecked = isDone
 
-        // Estilizar o badge de prioridade
         setupPriorityBadge(tvPriority, priority)
+        updateTaskAlpha(isDone, tvTitle, tvDesc)
 
-        // Listener do Checkbox
-        cbDone.setOnCheckedChangeListener { _, _ ->
+        cbDone.setOnCheckedChangeListener { _, isChecked ->
+            updateTaskAlpha(isChecked, tvTitle, tvDesc)
             sendResultBack()
         }
 
-        // Listener do Botão Excluir
         btnDelete.setOnClickListener {
             isDeleted = true
-            sendResultBack()
             finish()
         }
-
 
         btnEdit.setOnClickListener {
             val intent = Intent(this, NewTaskActivity::class.java).apply {
@@ -91,17 +89,24 @@ class TaskDetailActivity : AppCompatActivity() {
     }
 
     private fun setupPriorityBadge(textView: TextView, priority: String) {
-        val color = when (priority) {
-            "Alta" -> "#FF5252"
-            "Média" -> "#FFAB40"
-            else -> "#4CAF50"
+        val colorRes = when (priority) {
+            "Alta" -> R.color.priority_high
+            "Baixa" -> R.color.priority_low
+            else -> R.color.purple_main
         }
-        textView.backgroundTintList = ColorStateList.valueOf(Color.parseColor(color))
-        textView.setTextColor(Color.WHITE)
+        val color = ContextCompat.getColor(this, colorRes)
+        textView.backgroundTintList = ColorStateList.valueOf(color)
+    }
+
+    private fun updateTaskAlpha(isDone: Boolean, title: TextView, desc: TextView) {
+        val alpha = if (isDone) 0.5f else 1.0f
+        title.animate().alpha(alpha).setDuration(300).start()
+        desc.animate().alpha(alpha).setDuration(300).start()
     }
 
     private fun sendResultBack() {
-        val cbDone: CheckBox = findViewById(R.id.cbDetailDone)
+        val tvTitle = findViewById<TextView>(R.id.tvDetailTitle) ?: return
+        val cbDone: MaterialCheckBox = findViewById(R.id.cbDetailDone)
         val resultIntent = Intent().apply {
             putExtra("task_id", taskId)
             putExtra("task_title", findViewById<TextView>(R.id.tvDetailTitle).text.toString())
@@ -113,9 +118,8 @@ class TaskDetailActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultIntent)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
+    override fun finish() {
         sendResultBack()
-        super.onBackPressed()
+        super.finish()
     }
 }
